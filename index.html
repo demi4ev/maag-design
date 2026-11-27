@@ -3,69 +3,48 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Дизайн-прототипы — проекты</title>
+<title>Дизайн-прототипы</title>
 <style>
-:root{color-scheme:light;--black:#000;--white:#fff;--gray:#ccc;--mute:#8f8f8f;--line:#e0e0e0;--side:40px}
-*{box-sizing:border-box;min-width:0}
+:root{--black:#000;--white:#fff;--line:#e0e0e0;--side:40px}
+*{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--white);color:var(--black);font-family:"Helvetica Neue",Helvetica,Inter,Arial,sans-serif;font-weight:300}
+body{background:var(--white);color:var(--black);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:400;font-size:14px;line-height:20px}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
 :focus-visible{outline:1px solid var(--black);outline-offset:3px}
-.t12{font-size:12px;line-height:18px;letter-spacing:.48px;text-transform:uppercase}
-.t14{font-size:14px;line-height:20px;letter-spacing:.56px;text-transform:uppercase}
-.t20{font-size:20px;line-height:28px;text-transform:uppercase}
 
-header{padding:32px var(--side) 0;display:flex;justify-content:space-between;align-items:baseline}
-.tabs{display:flex;gap:4px;padding:24px var(--side) 0}
-.chip{height:32px;padding:0 14px;display:flex;align-items:center;border:.5px solid var(--gray);background:var(--white)}
-.chip[aria-selected="true"]{background:var(--black);border-color:var(--black);color:var(--white)}
+.wrap{padding:32px var(--side);max-width:720px}
+h1{margin:0 0 24px;font:inherit}
+.tabs{display:flex;gap:20px;margin-bottom:24px}
+.tabs button{padding:0 0 2px;border-bottom:1px solid transparent}
+.tabs button[aria-selected="true"]{border-bottom-color:var(--black)}
+.tabs button:hover{border-bottom-color:var(--line)}
+.tabs button[aria-selected="true"]:hover{border-bottom-color:var(--black)}
 
-main{padding:40px var(--side) 80px;max-width:960px}
 .panel[hidden]{display:none}
-.head{display:flex;justify-content:space-between;color:var(--mute);padding-bottom:12px;border-bottom:.5px solid var(--black)}
-.task{display:flex;gap:16px;align-items:baseline;padding:20px 0;border-bottom:.5px solid var(--line);transition:padding .2s}
-.task .n{width:24px;color:var(--mute)}
-.task .name{flex:1}
-.task .meta{color:var(--mute)}
-.task .go{width:24px;text-align:right;transition:transform .2s}
-.task:hover{padding-left:8px}
-.task:hover .go{transform:translateX(4px)}
-@media (max-width:600px){:root{--side:16px}.task .meta{display:none}}
+.task{display:block;padding:6px 0}
+.task:hover{text-decoration:underline}
+
+@media (max-width:600px){:root{--side:16px}}
 </style>
 </head>
 <body>
-<header>
-  <span class="t14">Дизайн-прототипы</span>
-  <span class="t12" style="color:var(--mute)">2 проекта</span>
-</header>
+<div class="wrap">
+  <h1>Дизайн-прототипы</h1>
 
-<nav class="tabs" role="tablist" aria-label="Проекты">
-  <button class="chip t12" role="tab" id="tab-maag" aria-controls="panel-maag" aria-selected="true">MAAG</button>
-  <button class="chip t12" role="tab" id="tab-vilet" aria-controls="panel-vilet" aria-selected="false" tabindex="-1">VILET</button>
-</nav>
+  <nav class="tabs" role="tablist" aria-label="Проекты">
+    <button role="tab" id="tab-maag" aria-controls="panel-maag" aria-selected="true">MAAG</button>
+    <button role="tab" id="tab-vilet" aria-controls="panel-vilet" aria-selected="false" tabindex="-1">VILET</button>
+  </nav>
 
-<main>
   <section class="panel" id="panel-maag" role="tabpanel" aria-labelledby="tab-maag">
-    <div class="head t12"><span>Задача</span><span>Статус</span></div>
-    <a class="task" href="maag/">
-      <span class="n t12">01</span>
-      <span class="name t20">Коллекция + футер с оверскроллом</span>
-      <span class="meta t12">Прототип</span>
-      <span class="go t14">→</span>
-    </a>
+    <a class="task" href="maag/">Футер с оверскроллом к новинкам</a>
   </section>
 
   <section class="panel" id="panel-vilet" role="tabpanel" aria-labelledby="tab-vilet" hidden>
-    <div class="head t12"><span>Задача</span><span>Статус</span></div>
-    <a class="task" href="vilet/">
-      <span class="n t12">01</span>
-      <span class="name t20">Главная + раскрывающееся меню</span>
-      <span class="meta t12">Прототип</span>
-      <span class="go t14">→</span>
-    </a>
+    <a class="task" href="vilet/">Главная и боковое меню</a>
   </section>
-</main>
+</div>
 
 <script>
 (function(){
@@ -87,7 +66,7 @@ main{padding:40px var(--side) 80px;max-width:960px}
       var n=tabs[(i+d+tabs.length)%tabs.length];n.focus();select(n,true);
     });
   });
-  var h=location.hash.slice(1),t=document.getElementById('tab-'+h);
+  var t=document.getElementById('tab-'+location.hash.slice(1));
   if(t)select(t,false);
 })();
 </script>
