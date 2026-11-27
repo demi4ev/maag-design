@@ -110,7 +110,7 @@ body.menu-open .menu{transform:none;visibility:visible;transition:transform .35s
 .m-search img{width:18px;height:18px}
 
 .m-story{display:flex;flex-direction:column;gap:12px}
-.m-story .pic{aspect-ratio:400/218;width:100%;background:var(--ph)}
+.m-story .pic{display:block;aspect-ratio:400/218;width:100%;background:var(--ph)}
 .m-story .pic img{width:100%;height:100%;object-fit:cover}
 .m-story .txt{display:flex;flex-direction:column}
 .m-story .more{display:flex;gap:4px;align-items:center}
@@ -325,11 +325,10 @@ body.menu-open .menu{transform:none;visibility:visible;transition:transform .35s
 
     <div class="m-body">
       <div class="m-story">
-        <!-- TODO: нет экспортированного фото баннера «Актуальная история VILET» -->
-        <div class="pic"></div>
+        <a class="pic" href="#"><img src="assets/menu-story.jpg" alt=""></a>
         <div class="txt">
           <span class="h4">Актуальная история VILET</span>
-          <a class="more p3" href="#">Смотреть историю <span aria-hidden="true">→</span></a>
+          <a class="more p3" href="#">Смотреть историю <img src="assets/arrow.svg" width="12" height="12" alt=""></a>
         </div>
       </div>
 

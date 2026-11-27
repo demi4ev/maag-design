@@ -16,4 +16,4 @@ Open `maag/index.html` in a browser, no build step.
 - `maag/` — MAAG collection page with footer overscroll
 - `vilet/` — VILET home page with expanding menu (1440 / 768 / 360 from Figma «main-menu 18-11-2026»)
   - Menu opens from the burger, «Одежда» expands the submenu (side panel on desktop/tablet, replaces the list on mobile), Esc / overlay / ✕ close it
-  - Placeholders (grey blocks) mark photos not yet exported from Figma: menu banner, «Pants» heroes, «Tops»/«Looks» tiles, #VILETLOOKS grid
+  - Placeholders (grey blocks) mark photos not yet exported from Figma: «Pants» heroes, «Tops»/«Looks» tiles, #VILETLOOKS grid
