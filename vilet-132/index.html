@@ -96,7 +96,7 @@ ul{list-style:none;margin:0;padding:0}
 body.menu-open .scrim{opacity:.5;visibility:visible;transition:opacity .3s ease}
 body.menu-open .menu{transform:none;visibility:visible;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
 
-.m-left{width:400px;flex:none;height:100%;overflow-y:auto;border-right:1px solid var(--line);padding:24px 40px;display:flex;flex-direction:column;gap:32px;overscroll-behavior:contain}
+.m-left{width:400px;flex:none;height:100%;overflow-y:auto;border-right:1px solid var(--line);padding:24px 40px;display:flex;flex-direction:column;gap:24px;overscroll-behavior:contain}
 .m-top-m{display:none}
 .m-body{display:contents}
 .m-top-d{display:flex;gap:24px;align-items:center}
@@ -116,7 +116,9 @@ body.menu-open .menu{transform:none;visibility:visible;transition:transform .35s
 .m-story .more{display:flex;gap:4px;align-items:center}
 .m-looks{display:flex;flex-direction:column;gap:16px;text-transform:uppercase}
 .m-looks .soon{color:var(--mute)}
-.m-looks .soon-t{display:flex;flex-direction:column}
+.m-looks .soon-t{display:flex;gap:6px;align-items:baseline;white-space:nowrap}
+.m-link{display:flex;gap:16px;align-items:center;justify-content:space-between;color:var(--black)}
+.m-link img{width:14px;height:14px;flex:none}
 
 .m-list{display:flex;flex-direction:column}
 .m-item{display:flex;gap:8px;align-items:center;min-height:48px;width:100%;border-bottom:1px solid var(--line);text-align:left}
@@ -205,7 +207,7 @@ body.menu-open .menu{transform:none;visibility:visible;transition:transform .35s
   .m-top-m .hdr-search-ico{display:block}
   .m-top-m .mlogo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:80px;height:22px}
   .m-top-m .mlogo img{width:80px;height:22px}
-  .m-body{padding:0 16px 24px;display:flex;flex-direction:column;gap:40px}
+  .m-body{padding:16px 16px 32px;display:flex;flex-direction:column;gap:40px}
   .m-right{position:absolute;left:0;right:0;top:52px;bottom:0;width:auto;height:auto;background:var(--white);transform:translateX(100%);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
   .menu[data-view="sub"] .m-right{width:auto;transform:none}
   .m-right-in{width:100%;padding:16px;display:flex;flex-direction:column;gap:28px}
@@ -217,14 +219,12 @@ body.menu-open .menu{transform:none;visibility:visible;transition:transform .35s
 
 
 /* ---------- вариант меню: баннер сверху / снизу ---------- */
-.menu[data-banner="bottom"] .m-looks{order:1}
-.menu[data-banner="bottom"] .m-list{order:2}
-.menu[data-banner="bottom"] .m-story{order:3}
+.menu[data-banner="top"] .m-story{order:-1}
 
 /* ---------- системная кнопка прототипа ---------- */
 .sys-btn{position:fixed;right:20px;bottom:20px;z-index:300;padding:6px 12px;background:var(--white);color:var(--black);border:1px solid var(--line);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;font-weight:400;letter-spacing:0;text-transform:none;font-variation-settings:normal}
 .sys-btn:hover{border-color:var(--black)}
-@media (max-width:700px){.sys-btn{right:16px;bottom:16px}.menu[data-banner="bottom"] .m-body{padding-top:16px}}
+@media (max-width:700px){.sys-btn{right:16px;bottom:16px}}
 
 @media (prefers-reduced-motion:reduce){
   .scrim,.menu,.m-right,.m-sublist a,.m-item .c{transition:none!important}
@@ -313,7 +313,7 @@ body.menu-open .menu{transform:none;visibility:visible;transition:transform .35s
   </div>
 </footer>
 
-<button class="sys-btn" id="bannerToggle" type="button" aria-live="polite">Баннер в меню: сверху</button>
+<button class="sys-btn" id="bannerToggle" type="button" aria-live="polite">Баннер в меню: снизу</button>
 
 <div class="scrim" id="scrim"></div>
 
@@ -337,27 +337,29 @@ body.menu-open .menu{transform:none;visibility:visible;transition:transform .35s
     </div>
 
     <div class="m-body">
+      <div class="m-list">
+        <button class="m-item" aria-expanded="false"><span class="l"><span class="n h5">01</span><span class="t h4">Новинки</span></span><img class="c" src="assets/chevron.svg" alt=""></button>
+        <button class="m-item" data-sub="clothes" aria-expanded="false"><span class="l"><span class="n h5">02</span><span class="t h4">Одежда</span></span><img class="c" src="assets/chevron.svg" alt=""></button>
+        <button class="m-item" aria-expanded="false"><span class="l"><span class="n h5">03</span><span class="t h4">Бестселлеры</span></span></button>
+        <a class="m-item" href="#"><span class="l"><span class="n h5">04</span><span class="t h4">Обувь</span></span></a>
+        <a class="m-item" href="#"><span class="l"><span class="n h5">05</span><span class="t h4">Сумки</span></span></a>
+        <a class="m-item" href="#"><span class="l"><span class="n h5">06</span><span class="t h4">Аксессуары</span></span></a>
+        <button class="m-item m-item--sale" aria-expanded="false"><span class="l"><span class="n h5">07</span><span class="t h4">Специальное предложение</span></span></button>
+      </div>
+
+      <div class="m-looks">
+        <span class="h5 up">#VILETLOOKS</span>
+        <div class="soon-t"><span class="h5">Шоппинг со стилистом</span><span class="soon h5">coming soon</span></div>
+        <a class="m-link h5" href="#"><span>Магазины</span><img src="assets/stores.svg" width="14" height="14" alt=""></a>
+        <a class="m-link h5" href="#"><span>Подписка</span><img src="assets/subscribe.svg" width="14" height="14" alt=""></a>
+      </div>
+
       <div class="m-story">
         <a class="pic" href="#"><img src="assets/menu-story.jpg" alt=""></a>
         <div class="txt">
           <span class="h4">Актуальная история VILET</span>
           <a class="more p3" href="#">Смотреть историю <img src="assets/arrow.svg" width="12" height="12" alt=""></a>
         </div>
-      </div>
-
-      <div class="m-looks">
-        <span class="h4">#VILETLOOKS</span>
-        <div class="soon-t"><span class="h4">Шопинг с персональным стилистом</span><span class="soon h5">coming soon</span></div>
-      </div>
-
-      <div class="m-list">
-        <button class="m-item" aria-expanded="false"><span class="l"><span class="n h5">01</span><span class="t h4">Подборки</span></span><img class="c" src="assets/chevron.svg" alt=""></button>
-        <button class="m-item" data-sub="clothes" aria-expanded="false"><span class="l"><span class="n h5">02</span><span class="t h4">Одежда</span></span><img class="c" src="assets/chevron.svg" alt=""></button>
-        <button class="m-item" aria-expanded="false"><span class="l"><span class="n h5">03</span><span class="t h4">Бестселлеры</span></span><img class="c" src="assets/chevron.svg" alt=""></button>
-        <a class="m-item" href="#"><span class="l"><span class="n h5">04</span><span class="t h4">Обувь</span></span></a>
-        <a class="m-item" href="#"><span class="l"><span class="n h5">05</span><span class="t h4">Сумки</span></span></a>
-        <a class="m-item" href="#"><span class="l"><span class="n h5">06</span><span class="t h4">Аксессуары</span></span></a>
-        <button class="m-item m-item--sale" aria-expanded="false"><span class="l"><span class="n h5">07</span><span class="t h4">Специальные цены</span></span><img class="c" src="assets/chevron.svg" alt=""></button>
       </div>
     </div>
   </div>
@@ -445,7 +447,7 @@ body.menu-open .menu{transform:none;visibility:visible;transition:transform .35s
     try{localStorage.setItem('vilet-banner',pos)}catch(e){}
   }
   var saved=null;try{saved=localStorage.getItem('vilet-banner')}catch(e){}
-  setBanner(saved==='bottom'?'bottom':'top');
+  setBanner(saved==='top'?'top':'bottom');
   tgl.addEventListener('click',function(){setBanner(menu.dataset.banner==='bottom'?'top':'bottom')});
 
   // при смене ширины сбрасываем состояние подменю
