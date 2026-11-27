@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VILET — главная и меню</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400&family=Roboto:wdth,wght@75..100,300..500&display=swap" rel="stylesheet">
+<style>
+/*
+Макет: Figma VILET, секция «main-menu 18-11-2026».
+Брейкпоинты: 1440 (десктоп, меню 400 + подменю 300), 768 (планшет, то же меню), 360 (мобильный, меню на весь экран, подменю заменяет список).
+Токены: text-1000 #000, text-500 #8f8f8f, border-200 #e0e0e0, border-300 #cdcdcd, brand-2 #fea4a4, surface-200 #e0e0e0, подложка меню — чёрный 50%.
+*/
+:root{
+  --black:#000;--white:#fff;--mute:#8f8f8f;--line:#e0e0e0;--line-2:#cdcdcd;--brand:#fea4a4;--surface-200:#e0e0e0;
+  --ph:#cfcfcf;
+  --t-text:"Roboto",Arial,sans-serif;--t-title:"Roboto",Arial,sans-serif;--t-display:"Jost","Helvetica Neue",Arial,sans-serif;
+  --hdr:64px;--pad:20px;
+}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{background:var(--white);color:var(--black);font-family:var(--t-text);font-weight:400;font-variation-settings:"wdth" 100;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:inherit}
+img{display:block;max-width:none}
+ul{list-style:none;margin:0;padding:0}
+:focus-visible{outline:1px solid var(--black);outline-offset:3px}
+
+/* ---------- типографика ---------- */
+.h3{font-family:var(--t-display);font-size:24px;line-height:28px;letter-spacing:1px;text-transform:uppercase}
+.p1{font-size:18px;line-height:22px;letter-spacing:-.36px}
+.h4{font-family:var(--t-title);font-weight:500;font-size:15px;line-height:19px;letter-spacing:-.3px;text-transform:uppercase}
+.h5{font-size:12px;line-height:14px;text-transform:uppercase}
+.p3{font-size:12px;line-height:18px;letter-spacing:-.24px}
+.ul{text-decoration:underline;text-underline-position:from-font}
+
+/* ---------- header ---------- */
+.hdr{position:absolute;top:0;left:0;right:0;z-index:10;height:var(--hdr);display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad)}
+.burger{width:64px;height:64px;flex:none}
+.burger img{width:64px;height:64px}
+.burger .bars{display:none}
+.hdr-logo{position:absolute;left:50%;top:50%;width:110px;height:30px;transform:translate(-50%,-50%)}
+.hdr-logo img{width:110px;height:30px}
+.hdr-right{display:flex;gap:40px;align-items:flex-start;justify-content:flex-end}
+.lang{display:flex;gap:12px}
+.lang a{color:var(--black)}.lang a.off{color:var(--mute)}
+.hdr-search{width:144px;border:0;border-bottom:1px solid var(--black);padding:0 0 4px;background:none;font:inherit;font-size:12px;line-height:14px;text-transform:uppercase;text-align:right;color:var(--black);border-radius:0;outline-offset:6px}
+.hdr-search::placeholder{color:var(--black);opacity:1}
+.hdr-search-ico{display:none}
+.big-logo{position:absolute;z-index:2;left:1.39%;top:72px;width:530px;height:144px;pointer-events:none}
+
+/* ---------- hero ---------- */
+.hero{position:relative;aspect-ratio:1440/810;display:flex;flex-direction:column;justify-content:flex-end;gap:48px;padding:var(--pad);overflow:hidden}
+.hero>img,.hero>.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero .bg{background:#dcdcdc}
+.hero-text{position:relative;display:flex;flex-direction:column;width:100%;max-width:400px}
+.hero-text .va{display:block}
+.pagination{position:absolute;left:50%;bottom:var(--pad);transform:translateX(-50%);display:flex;gap:5px}
+.pagination i{display:block;width:48px;height:2px;border-radius:8px;background:var(--white)}
+.pagination i+i{background:rgba(255,255,255,.5)}
+
+/* ---------- плитки ---------- */
+.list{display:grid}
+.list--4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.list--2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.list--4 .tile{aspect-ratio:360/520}
+.list--2 .tile{aspect-ratio:720/816}
+.tile{position:relative;display:flex;align-items:flex-end;padding:var(--pad);overflow:hidden;color:var(--white);background:var(--white)}
+.tile>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tile.miss{background:var(--ph)}
+.tile span{position:relative}
+
+/* ---------- #VILETLOOKS ---------- */
+.looks{background:var(--surface-200);padding:48px var(--pad)}
+.looks-in{display:flex;gap:40px;align-items:flex-start}
+.looks-grid{flex:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.looks-grid i{display:block;aspect-ratio:400/500;background:var(--ph);outline:.5px solid var(--surface-200)}
+.looks-text{width:280px;flex:none;display:flex;flex-direction:column;gap:30px}
+.looks-text h2{margin:0;font-family:var(--t-title);font-weight:400;font-size:40px;line-height:47px;letter-spacing:-.8px;font-variation-settings:"wdth" 75}
+
+/* ---------- footer ---------- */
+.footer{padding:200px var(--pad) 48px;display:flex;flex-direction:column;gap:80px}
+.footer-logo{width:800px;height:217px;max-width:100%}
+.footer-cols{display:flex;gap:20px;align-items:flex-start}
+.fcol{flex:1;display:flex;flex-direction:column;gap:20px}
+.fcol-h{display:flex;gap:8px;align-items:center;font-weight:300;color:var(--mute);width:100%}
+.fcol-h img{display:none}
+.fcol-links{display:flex;flex-direction:column;gap:12px}
+
+/* ---------- затемнение и меню ---------- */
+.scrim{position:fixed;inset:0;z-index:100;background:#000;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s}
+.menu{position:fixed;z-index:110;top:0;left:0;height:100vh;height:100dvh;display:flex;background:var(--white);transform:translateX(-100%);visibility:hidden;transition:transform .35s cubic-bezier(.2,.7,.2,1),visibility 0s .35s}
+body.menu-open .scrim{opacity:.5;visibility:visible;transition:opacity .3s ease}
+body.menu-open .menu{transform:none;visibility:visible;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+
+.m-left{width:400px;flex:none;height:100%;overflow-y:auto;border-right:1px solid var(--line);padding:24px 40px;display:flex;flex-direction:column;gap:32px;overscroll-behavior:contain}
+.m-top-m{display:none}
+.m-body{display:contents}
+.m-top-d{display:flex;gap:24px;align-items:center}
+.m-close{width:18px;height:18px;flex:none}
+.m-close img{width:18px;height:18px}
+.m-search{flex:1;display:flex;gap:12px;align-items:center;min-height:40px;padding:12px 0;border-bottom:1px solid var(--line-2)}
+.m-search input{flex:1;border:0;background:none;padding:0;font:inherit;font-size:12px;line-height:18px;letter-spacing:-.24px;color:var(--black);outline:none}
+.m-search input::placeholder{color:var(--mute);opacity:1}
+.m-search:focus-within{border-bottom-color:var(--black)}
+.m-search button{width:18px;height:18px;flex:none}
+.m-search img{width:18px;height:18px}
+
+.m-story{display:flex;flex-direction:column;gap:12px}
+.m-story .pic{display:block;aspect-ratio:400/218;width:100%;background:var(--ph)}
+.m-story .pic img{width:100%;height:100%;object-fit:cover}
+.m-story .txt{display:flex;flex-direction:column}
+.m-story .more{display:flex;gap:4px;align-items:center}
+.m-looks{display:flex;flex-direction:column;gap:16px;text-transform:uppercase}
+.m-looks .soon{color:var(--mute)}
+.m-looks .soon-t{display:flex;flex-direction:column}
+
+.m-list{display:flex;flex-direction:column}
+.m-item{display:flex;gap:8px;align-items:center;min-height:48px;width:100%;border-bottom:1px solid var(--line);text-align:left}
+.m-item:last-child{border-bottom:0}
+.m-item .l{flex:1;display:flex;gap:4px;align-items:baseline}
+.m-item .n{width:20px;flex:none;color:var(--mute)}
+.m-item .t{padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .2s}
+.m-item[aria-expanded="true"] .t,.m-item:hover .t{border-bottom-color:var(--black)}
+.m-item .c{width:18px;height:18px;flex:none;transition:transform .25s}
+.m-item[aria-expanded="true"] .c{transform:translateX(3px)}
+.m-item--sale .t{color:var(--brand)}
+.m-item--sale:hover .t,.m-item--sale[aria-expanded="true"] .t{border-bottom-color:var(--brand)}
+
+.m-right{width:0;flex:none;overflow:hidden;height:100%;transition:width .35s cubic-bezier(.2,.7,.2,1)}
+.m-right-in{width:300px;height:100%;overflow-y:auto;padding:48px 40px}
+.menu[data-view="sub"] .m-right{width:300px}
+.m-back{display:none}
+.m-sublist{display:flex;flex-direction:column;gap:28px}
+.m-sublist a{display:block;opacity:0;transform:translateX(-8px);transition:opacity .3s ease,transform .3s ease}
+.menu[data-view="sub"] .m-sublist a{opacity:1;transform:none}
+.m-sublist li:nth-child(2) a{transition-delay:.03s}.m-sublist li:nth-child(3) a{transition-delay:.06s}.m-sublist li:nth-child(4) a{transition-delay:.09s}
+.m-sublist li:nth-child(5) a{transition-delay:.12s}.m-sublist li:nth-child(6) a{transition-delay:.15s}.m-sublist li:nth-child(7) a{transition-delay:.18s}
+.m-sublist li:nth-child(8) a{transition-delay:.21s}.m-sublist li:nth-child(9) a{transition-delay:.24s}.m-sublist li:nth-child(10) a{transition-delay:.27s}
+.m-sublist li:nth-child(11) a{transition-delay:.3s}
+.m-sublist a:hover{text-decoration:underline}
+
+/* ---------- планшет 768 ---------- */
+@media (max-width:1023px){
+  .hero{aspect-ratio:768/1024}
+  .hero>img{object-position:18% 50%}
+  .footer{padding-top:120px}
+}
+
+/* ---------- мобильный 360 ---------- */
+@media (max-width:700px){
+  :root{--hdr:52px;--pad:16px}
+  .hdr{padding:14px 16px}
+  .burger{width:24px;height:24px}
+  .burger img{display:none}
+  .burger .bars{display:block;position:relative;width:24px;height:24px}
+  .burger .bars i{position:absolute;left:2px;right:2px;height:1.5px;background:var(--black)}
+  .burger .bars i:nth-child(1){top:7px}.burger .bars i:nth-child(2){top:11.25px}.burger .bars i:nth-child(3){top:15.5px}
+  .hdr-logo{width:80px;height:22px}.hdr-logo img{width:80px;height:22px}
+  .hdr-right{gap:20px;align-items:center}
+  .hdr-search{display:none}
+  .hdr-search-ico{display:block;width:24px;height:24px}
+  .hdr-search-ico img{width:24px;height:24px}
+  .big-logo{left:50%;transform:translateX(-50%);top:64px;width:min(344px,calc(100% - 16px));height:auto;aspect-ratio:344/93}
+
+  .hero{aspect-ratio:auto;height:600px;gap:24px;align-items:center}
+  .hero>img{object-position:17.3% 50%}
+  .hero .h3{font-size:16px;line-height:20px}
+  .pagination{position:relative;left:auto;bottom:auto;transform:none}
+  .hero--2 .va{text-decoration:none}
+  .h3{font-size:16px;line-height:20px}
+
+  .list--4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .list--4 .tile{aspect-ratio:auto;height:260px}
+  .list--2{grid-template-columns:minmax(0,1fr)}
+
+  .looks{padding:48px 16px}
+  .looks-in{flex-direction:column;gap:40px;width:100%}
+  .looks-grid{width:100%}
+  .looks-text{width:100%;gap:16px}
+
+  .footer{padding:80px 16px 48px;gap:40px}
+  .footer-logo{width:100%;height:auto;aspect-ratio:110/29.834}
+  .footer-cols{flex-direction:column;gap:0}
+  .fcol{width:100%;flex:none;gap:0}
+  .fcol--acc{border-bottom:.5px solid var(--line-2);padding:16px 0}
+  .fcol--acc .fcol-h{cursor:pointer}
+  .fcol--acc .fcol-h img{display:block;width:12px;height:12px;transform:rotate(90deg);transition:transform .2s}
+  .fcol--acc .fcol-h[aria-expanded="true"] img{transform:rotate(-90deg)}
+  .fcol--acc .fcol-links{margin-top:16px}
+  .fcol--acc .fcol-h[aria-expanded="false"]+.fcol-links{display:none}
+  .fcol--social{padding-top:16px;gap:16px}
+  .fcol--social .fcol-links{flex-direction:row;flex-wrap:wrap;gap:16px}
+  .fcol--social .fcol-links a{width:calc(50% - 8px)}
+
+  /* меню на весь экран */
+  .menu{width:100%;flex-direction:column}
+  .m-left{width:100%;border-right:0;padding:0;gap:0;position:relative}
+  .m-top-d{display:none}
+  .m-top-m{display:flex;position:relative;align-items:center;justify-content:space-between;padding:14px 16px;flex:none}
+  .m-top-m .m-close{width:24px;height:24px}.m-top-m .m-close img{width:24px;height:24px}
+  .m-top-m .hdr-search-ico{display:block}
+  .m-top-m .mlogo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:80px;height:22px}
+  .m-top-m .mlogo img{width:80px;height:22px}
+  .m-body{padding:0 16px 24px;display:flex;flex-direction:column;gap:40px}
+  .m-right{position:absolute;left:0;right:0;top:52px;bottom:0;width:auto;height:auto;background:var(--white);transform:translateX(100%);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+  .menu[data-view="sub"] .m-right{width:auto;transform:none}
+  .m-right-in{width:100%;padding:16px;display:flex;flex-direction:column;gap:28px}
+  .m-back{display:flex;gap:12px;align-items:center}
+  .m-back img{width:18px;height:18px;transform:rotate(180deg)}
+  .m-back .t{padding-bottom:2px}
+  .m-sublist{padding-left:30px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .scrim,.menu,.m-right,.m-sublist a,.m-item .c{transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="menu">
+    <img src="assets/burger.svg" alt=""><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
+  </button>
+  <a class="hdr-logo" href="#" aria-label="VILET"><img src="assets/logo-black.svg" alt="VILET"></a>
+  <div class="hdr-right">
+    <div class="lang h5"><a class="off" href="#">EN</a><a href="#">RU</a></div>
+    <input class="hdr-search" type="search" placeholder="Search" aria-label="Search">
+    <button class="hdr-search-ico" aria-label="Поиск"><img src="assets/search.svg" alt=""></button>
+  </div>
+</header>
+
+<img class="big-logo" src="assets/logo-white.svg" alt="">
+
+<main>
+  <section class="hero hero--1">
+    <img src="assets/hero.jpg" alt="">
+    <div class="hero-text">
+      <span class="h3">Новая коллекция</span>
+      <a class="va p1 ul" href="#">View All</a>
+    </div>
+    <div class="pagination" aria-hidden="true"><i></i><i></i></div>
+  </section>
+
+  <section class="list list--4">
+    <a class="tile" href="#"><img src="assets/tile-outerwear.jpg" alt=""><span class="h3">Верхняя одежда</span></a>
+    <a class="tile" href="#"><img src="assets/tile-shoes.jpg" alt=""><span class="h3">Обувь</span></a>
+    <a class="tile" href="#"><img src="assets/tile-knit.jpg" alt=""><span class="h3">Трикотаж</span></a>
+    <a class="tile" href="#"><img src="assets/tile-tshirts.jpg" alt=""><span class="h3">Футболки / логнсливы</span></a>
+  </section>
+
+  <!-- TODO: нет экспортированного фото из Figma -->
+  <section class="hero hero--2">
+    <div class="bg"></div>
+    <div class="hero-text"><span class="h3">Pants</span><a class="va p1 ul" href="#">View All</a></div>
+  </section>
+
+  <section class="list list--2">
+    <a class="tile miss" href="#"><span class="h3">Tops</span></a>
+    <a class="tile miss" href="#"><span class="h3">Looks</span></a>
+  </section>
+
+  <section class="hero hero--3">
+    <div class="bg"></div>
+    <div class="hero-text"><span class="h3">Pants</span><a class="va p1 ul" href="#">View All</a></div>
+  </section>
+
+  <section class="looks">
+    <div class="looks-in">
+      <div class="looks-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="looks-text">
+        <h2>#VILETLOOKS</h2>
+        <a class="p1 ul" href="#">View All</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <img class="footer-logo" src="assets/logo-black.svg" alt="VILET">
+  <div class="footer-cols h5">
+    <div class="fcol fcol--acc">
+      <button class="fcol-h" aria-expanded="false"><span style="flex:1">Services</span><img src="assets/chevron.svg" alt=""></button>
+      <div class="fcol-links"><a href="#">Gift Card</a><a href="#">Subscribe to News</a></div>
+    </div>
+    <div class="fcol fcol--acc">
+      <button class="fcol-h" aria-expanded="true"><span style="flex:1">Legal Information</span><img src="assets/chevron.svg" alt=""></button>
+      <div class="fcol-links"><a href="#">Privacy Policy</a><a href="#">Cookie Policy</a><a href="#">Purchase Terms</a><a href="#">Gift Card Terms of Use</a></div>
+    </div>
+    <div class="fcol fcol--acc">
+      <button class="fcol-h" aria-expanded="false"><span style="flex:1">Company</span><img src="assets/chevron.svg" alt=""></button>
+      <div class="fcol-links"><a href="#">About Us</a><a href="#">Find Our Stores</a><a href="#">Contacts</a><a href="#">Career</a></div>
+    </div>
+    <div class="fcol fcol--social">
+      <div class="fcol-h"><span>Social Media</span></div>
+      <div class="fcol-links"><a href="#">Telegram</a><a href="#">Max</a><a href="#">Pinterest</a><a href="#">Vkontakte</a><a href="#">Ritm</a><a href="#">TikTok</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+
+<aside class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Меню" data-view="main" aria-hidden="true">
+  <div class="m-left">
+    <div class="m-top-d">
+      <button class="m-close" data-close aria-label="Закрыть меню"><img src="assets/close.svg" alt=""></button>
+      <label class="m-search">
+        <input type="search" placeholder="Найти" aria-label="Найти">
+        <button type="button" aria-label="Искать"><img src="assets/search.svg" alt=""></button>
+      </label>
+    </div>
+
+    <div class="m-top-m">
+      <button class="m-close" data-close aria-label="Закрыть меню"><img src="assets/close.svg" alt=""></button>
+      <a class="mlogo" href="#" aria-label="VILET"><img src="assets/logo-black.svg" alt="VILET"></a>
+      <div style="display:flex;gap:20px;align-items:center">
+        <div class="lang h5"><a class="off" href="#">EN</a><a href="#">RU</a></div>
+        <button class="hdr-search-ico" aria-label="Поиск"><img src="assets/search.svg" alt=""></button>
+      </div>
+    </div>
+
+    <div class="m-body">
+      <div class="m-story">
+        <a class="pic" href="#"><img src="assets/menu-story.jpg" alt=""></a>
+        <div class="txt">
+          <span class="h4">Актуальная история VILET</span>
+          <a class="more p3" href="#">Смотреть историю <img src="assets/arrow.svg" width="12" height="12" alt=""></a>
+        </div>
+      </div>
+
+      <div class="m-looks">
+        <span class="h4">#VILETLOOKS</span>
+        <div class="soon-t"><span class="h4">Шопинг с персональным стилистом</span><span class="soon h5">coming soon</span></div>
+      </div>
+
+      <div class="m-list">
+        <button class="m-item" aria-expanded="false"><span class="l"><span class="n h5">01</span><span class="t h4">Подборки</span></span><img class="c" src="assets/chevron.svg" alt=""></button>
+        <button class="m-item" data-sub="clothes" aria-expanded="false"><span class="l"><span class="n h5">02</span><span class="t h4">Одежда</span></span><img class="c" src="assets/chevron.svg" alt=""></button>
+        <button class="m-item" aria-expanded="false"><span class="l"><span class="n h5">03</span><span class="t h4">Бестселлеры</span></span><img class="c" src="assets/chevron.svg" alt=""></button>
+        <a class="m-item" href="#"><span class="l"><span class="n h5">04</span><span class="t h4">Обувь</span></span></a>
+        <a class="m-item" href="#"><span class="l"><span class="n h5">05</span><span class="t h4">Сумки</span></span></a>
+        <a class="m-item" href="#"><span class="l"><span class="n h5">06</span><span class="t h4">Аксессуары</span></span></a>
+        <button class="m-item m-item--sale" aria-expanded="false"><span class="l"><span class="n h5">07</span><span class="t h4">Специальные цены</span></span><img class="c" src="assets/chevron.svg" alt=""></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-right" aria-label="Подкатегории">
+    <div class="m-right-in">
+      <button class="m-back h4" data-back><img src="assets/chevron.svg" alt=""><span class="t" id="subTitle">Одежда</span></button>
+      <ul class="m-sublist h5" id="subList">
+        <li><a href="#">Верхняя одежда</a></li>
+        <li><a href="#">Трикотаж</a></li>
+        <li><a href="#">Толстовки</a></li>
+        <li><a href="#">Футболки | лонгсливы</a></li>
+        <li><a href="#">Рубашки</a></li>
+        <li><a href="#">Джинсы</a></li>
+        <li><a href="#">Брюки</a></li>
+        <li><a href="#">Платья</a></li>
+        <li><a href="#">Юбки</a></li>
+        <li><a href="#">Комплекты</a></li>
+        <li><a href="#">Кожа</a></li>
+      </ul>
+    </div>
+  </div>
+</aside>
+
+<script>
+(function(){
+  var body=document.body,menu=document.getElementById('menu'),burger=document.getElementById('burger');
+  var items=[].slice.call(menu.querySelectorAll('button.m-item'));
+  var lastFocus=null;
+
+  function setView(v){menu.dataset.view=v}
+  function clearActive(){items.forEach(function(i){i.setAttribute('aria-expanded','false')})}
+
+  function open(){
+    lastFocus=document.activeElement;
+    body.classList.add('menu-open','lock');
+    menu.setAttribute('aria-hidden','false');
+    burger.setAttribute('aria-expanded','true');
+    setTimeout(function(){var c=menu.querySelector('.m-top-d .m-close');var m=menu.querySelector('.m-top-m .m-close');
+      (getComputedStyle(menu.querySelector('.m-top-m')).display!=='none'?m:c).focus()},50);
+  }
+  function close(){
+    body.classList.remove('menu-open','lock');
+    menu.setAttribute('aria-hidden','true');
+    burger.setAttribute('aria-expanded','false');
+    setView('main');clearActive();
+    if(lastFocus&&lastFocus.focus)lastFocus.focus();
+  }
+
+  burger.addEventListener('click',open);
+  document.getElementById('scrim').addEventListener('click',close);
+  [].forEach.call(menu.querySelectorAll('[data-close]'),function(b){b.addEventListener('click',close)});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&body.classList.contains('menu-open')){
+      if(menu.dataset.view==='sub'&&matchMedia('(max-width:700px)').matches){setView('main');clearActive()}else close();
+    }
+  });
+
+  items.forEach(function(it){
+    it.addEventListener('click',function(){
+      var was=it.getAttribute('aria-expanded')==='true';
+      clearActive();
+      if(was&&!matchMedia('(max-width:700px)').matches){setView('main');return}
+      it.setAttribute('aria-expanded','true');
+      // подменю есть пока только у «Одежды»; остальные разделы выделяются, панель закрыта
+      if(it.dataset.sub==='clothes'){
+        document.getElementById('subTitle').textContent=it.querySelector('.t').textContent;
+        setView('sub');
+      }else setView('main');
+    });
+  });
+  menu.querySelector('[data-back]').addEventListener('click',function(){setView('main');clearActive()});
+
+  // футер на мобильном: аккордеон
+  [].forEach.call(document.querySelectorAll('.fcol--acc .fcol-h'),function(h){
+    h.addEventListener('click',function(){h.setAttribute('aria-expanded',h.getAttribute('aria-expanded')==='true'?'false':'true')});
+  });
+
+  // при смене ширины сбрасываем состояние подменю
+  matchMedia('(max-width:700px)').addEventListener('change',function(){setView('main');clearActive()});
+})();
+</script>
+</body>
+</html>

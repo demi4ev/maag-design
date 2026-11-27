@@ -3,221 +3,93 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MAAG — коллекция и футер</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<title>Дизайн-прототипы — проекты</title>
 <style>
-/*
-VOICE: MAAG как в макете Figma «1440 - collection»: белый, чёрный, Helvetica Neue Light, капслок.
-IDEA: футер — последний экран; доскролл заполняет линию и открывает блок новой коллекции.
-PICTURE: карточки 692×985, баннер Creative Direction, линия прогресса 1×96.
-COLOUR and TYPE: #fff / #000 / #ccc; 10/14, 12/18, 14/20, 20/28, 68 — все Light.
-LAYOUT: поля 141px на 1440, колонки по 40px; футер 100vh, контент прижат к низу.
-*/
-:root{color-scheme:light;--black:#000;--white:#fff;--gray:#ccc;--ph:#efefef;--side:141px;--edge:24px}
+:root{color-scheme:light;--black:#000;--white:#fff;--gray:#ccc;--mute:#8f8f8f;--line:#e0e0e0;--side:40px}
 *{box-sizing:border-box;min-width:0}
 html,body{margin:0}
-body{background:var(--white);color:var(--black);font-family:"Helvetica Neue",Helvetica,Inter,Arial,sans-serif;font-weight:300;overflow-x:clip}
+body{background:var(--white);color:var(--black);font-family:"Helvetica Neue",Helvetica,Inter,Arial,sans-serif;font-weight:300}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
-img{display:block}
 :focus-visible{outline:1px solid var(--black);outline-offset:3px}
-.t10{font-size:10px;line-height:14px;letter-spacing:.4px;text-transform:uppercase}
 .t12{font-size:12px;line-height:18px;letter-spacing:.48px;text-transform:uppercase}
 .t14{font-size:14px;line-height:20px;letter-spacing:.56px;text-transform:uppercase}
 .t20{font-size:20px;line-height:28px;text-transform:uppercase}
-/* placeholder for a missing exported asset */
-.miss{background:var(--ph)}
 
-/* header */
-.hdr{position:sticky;top:0;z-index:5;height:94px;background:var(--white)}
-.burger{position:absolute;left:var(--edge);top:16px;width:40px;height:40px;cursor:pointer}
-.burger img{width:40px;height:40px}
-.logo{position:absolute;left:var(--side);top:24px;width:179px;height:50px}
-.logo img{width:179px;height:50px}
-.logo .txt{display:none;font-size:56px;line-height:50px;letter-spacing:-1px}
-.logo.miss{background:none}.logo.miss img{display:none}.logo.miss .txt{display:block}
-.tools{position:absolute;right:var(--edge);top:24px;display:flex;gap:16px;align-items:center}
-.search{width:240px;height:24px;border:.5px solid var(--black);padding:0 8px;display:flex;align-items:center;font-size:12px;line-height:18px;letter-spacing:.24px}
-.ico{width:24px;height:24px}
-.ico img{width:24px;height:24px}
+header{padding:32px var(--side) 0;display:flex;justify-content:space-between;align-items:baseline}
+.tabs{display:flex;gap:4px;padding:24px var(--side) 0}
+.chip{height:32px;padding:0 14px;display:flex;align-items:center;border:.5px solid var(--gray);background:var(--white)}
+.chip[aria-selected="true"]{background:var(--black);border-color:var(--black);color:var(--white)}
 
-/* tabs */
-.tabs{display:flex;gap:4px;padding:32px var(--edge) 32px var(--side)}
-.chip{height:24px;padding:1px 7px 2px;display:flex;align-items:center;border:.5px solid var(--gray);background:var(--white)}
-.chip.on{background:var(--black);border-color:var(--black);color:var(--white)}
-
-/* products */
-.sec{display:flex;flex-direction:column;gap:40px;align-items:center}
-.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;padding:0 var(--side);width:100%}
-.card{display:flex;flex-direction:column;gap:16px}
-.card .img{aspect-ratio:692/985;overflow:hidden}
-.card .img img{width:100%;height:100%;object-fit:cover}
-.card .info{display:flex;gap:4px;align-items:flex-start}
-.card .tp{flex:1;display:flex;flex-direction:column;gap:4px}
-.card .btns{display:flex}
-.card .btns span{width:20px;height:20px}
-.card .btns img{width:20px;height:20px}
-.buy{width:241px;height:48px;background:var(--black);color:var(--white);display:flex;align-items:center;justify-content:center}
-
-/* footer = last screen */
-.ft{height:100vh;height:100dvh;min-height:640px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:clamp(48px,24.7vh,200px);padding:20px var(--edge);text-align:center}
-.ft .top,.ft .bot{width:100%;max-width:692px;display:flex;flex-direction:column;align-items:center}
-.ft .top{gap:24px}
-.prog{display:flex;flex-direction:column;align-items:center;gap:8px}
-.track{position:relative;width:1px;height:96px;background:var(--gray)}
-.fill{position:absolute;inset:0;background:var(--black);transform-origin:top;transform:scaleY(var(--p,0))}
-.pct{min-height:14px;font-variant-numeric:tabular-nums}
-.ft .bot{gap:48px;max-width:none}
-.links{display:flex;flex-direction:column;gap:16px;align-items:center}
-.links a{display:flex;gap:4px;align-items:flex-start}
-.links img{width:16px;height:16px}
-.legal{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px}
-.subform{display:flex;gap:8px;align-items:center}
-.subform input{font:inherit;font-size:16px;border:0;border-bottom:.5px solid var(--black);padding:2px;width:min(240px,60vw)}
-.subform[hidden]{display:none}
-
-/* new-in block */
-#new{display:none;padding-bottom:80px}
-body.is-new #home{display:none}
-body.is-new #new{display:flex}
-#new .sec{width:100%;padding-top:8px}
-.credits{text-align:center;padding:0 var(--side)}
-.credits p{margin:0}
-.banner{padding:0 var(--side);width:100%}
-.banner div{position:relative;aspect-ratio:1158/400;overflow:hidden;background:#8e8e8e}
-.banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-/* the exported banner already carries the lettering; the heading stays for screen readers */
-.banner h2{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);margin:0}
-.lead{margin:0;text-align:center;padding:0 var(--edge)}
-
-@media(max-width:1100px){:root{--side:var(--edge)}.logo{left:72px}}
-@media(max-width:760px){
-  :root{--edge:16px}
-  .search{display:none}
-  .logo{left:50%;transform:translateX(-50%);top:30px;width:116px;height:32px}.logo img{width:116px;height:32px}.logo .txt{font-size:36px;line-height:32px}
-  .hdr{height:80px}.tabs{padding:16px var(--edge)}
-  .row{gap:12px}.sec{gap:28px}
-  .card .t14{font-size:12px;line-height:18px}
-}
-@media(max-width:480px){.row{grid-template-columns:minmax(0,1fr)}}
-
-::view-transition-old(root){animation:out .5s cubic-bezier(.4,0,.2,1) both}
-::view-transition-new(root){animation:in .5s cubic-bezier(.4,0,.2,1) both}
-@keyframes out{to{opacity:0;transform:translateY(-60px)}}
-@keyframes in{from{opacity:0;transform:translateY(60px)}}
-@media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
+main{padding:40px var(--side) 80px;max-width:960px}
+.panel[hidden]{display:none}
+.head{display:flex;justify-content:space-between;color:var(--mute);padding-bottom:12px;border-bottom:.5px solid var(--black)}
+.task{display:flex;gap:16px;align-items:baseline;padding:20px 0;border-bottom:.5px solid var(--line);transition:padding .2s}
+.task .n{width:24px;color:var(--mute)}
+.task .name{flex:1}
+.task .meta{color:var(--mute)}
+.task .go{width:24px;text-align:right;transition:transform .2s}
+.task:hover{padding-left:8px}
+.task:hover .go{transform:translateX(4px)}
+@media (max-width:600px){:root{--side:16px}.task .meta{display:none}}
 </style>
 </head>
 <body>
-<header class="hdr">
-  <button class="burger" aria-label="Меню"><img data-src="assets/nav.svg" alt=""></button>
-  <a class="logo" href="#" id="logo" aria-label="MAAG"><img data-src="assets/logo.svg" alt="MAAG"><span class="txt">MAAG</span></a>
-  <div class="tools">
-    <div class="search">SEARCH</div>
-    <a class="ico" href="#" aria-label="Магазины"><img data-src="assets/location.svg" alt=""></a>
-    <a class="ico" href="#" aria-label="Профиль"><img data-src="assets/profile.svg" alt=""></a>
-    <a class="ico" href="#" aria-label="Корзина"><img data-src="assets/cart.svg" alt=""></a>
-  </div>
+<header>
+  <span class="t14">Дизайн-прототипы</span>
+  <span class="t12" style="color:var(--mute)">2 проекта</span>
 </header>
 
-<main id="home">
-  <nav class="tabs t12"><a class="chip" href="#">Эдиториал</a><a class="chip on" href="#">Collection</a></nav>
-  <section class="sec">
-    <div class="row" data-cards></div>
-    <a class="buy t14" href="#">Купить</a>
+<nav class="tabs" role="tablist" aria-label="Проекты">
+  <button class="chip t12" role="tab" id="tab-maag" aria-controls="panel-maag" aria-selected="true">MAAG</button>
+  <button class="chip t12" role="tab" id="tab-vilet" aria-controls="panel-vilet" aria-selected="false" tabindex="-1">VILET</button>
+</nav>
+
+<main>
+  <section class="panel" id="panel-maag" role="tabpanel" aria-labelledby="tab-maag">
+    <div class="head t12"><span>Задача</span><span>Статус</span></div>
+    <a class="task" href="maag/">
+      <span class="n t12">01</span>
+      <span class="name t20">Коллекция + футер с оверскроллом</span>
+      <span class="meta t12">Прототип</span>
+      <span class="go t14">→</span>
+    </a>
   </section>
 
-  <footer class="ft">
-    <div class="top">
-      <a class="t20" href="#new" id="goLink">Новинки</a>
-      <div class="prog">
-        <span class="t10" id="hint">Скрольте вниз</span>
-        <div class="track" aria-hidden="true"><div class="fill" id="fill"></div></div>
-        <span class="t10 pct" id="pct" aria-hidden="true"></span>
-      </div>
-    </div>
-    <div class="bot">
-      <button class="t12" id="subBtn" aria-expanded="false">Подписаться на новости</button>
-      <form class="subform t12" id="subForm" hidden><input type="email" placeholder="E-mail" aria-label="E-mail" required><button>→</button></form>
-      <nav class="links t12">
-        <a href="#">О нас</a><a href="#">Магазины</a><a href="#">Карьера</a>
-        <a href="#">ВКонтакте<img data-src="assets/arrow.svg" alt=""></a>
-        <a href="#">Телеграм<img data-src="assets/arrow.svg" alt=""></a>
-      </nav>
-      <nav class="legal t10">
-        <a href="#">Покупателям</a><a href="#">Условия использования подарочных карт</a><a href="#">Политика конфиденциальности</a><a href="#">Политика cookie</a>
-      </nav>
-    </div>
-  </footer>
-</main>
-
-<main id="new">
-  <section class="sec">
-    <div class="credits t14"><p>Creative direction and styling by Ludivine Poiblanc</p><p>Photography by Oliver Hadlee</p></div>
-    <div class="banner"><div><img data-src="assets/banner.png" alt=""><h2>Creative direction</h2></div></div>
-    <p class="lead t14">Добро пожаловать в пространство творческих экспериментов и трансформаций</p>
-    <div class="row" data-cards></div>
-    <a class="buy t14" href="#">Купить</a>
+  <section class="panel" id="panel-vilet" role="tabpanel" aria-labelledby="tab-vilet" hidden>
+    <div class="head t12"><span>Задача</span><span>Статус</span></div>
+    <a class="task" href="vilet/">
+      <span class="n t12">01</span>
+      <span class="name t20">Главная + раскрывающееся меню</span>
+      <span class="meta t12">Прототип</span>
+      <span class="go t14">→</span>
+    </a>
   </section>
 </main>
 
 <script>
-{
-const cards=[['assets/card1.png','Сапоги трубы фантазийные на каблуке','7 999 ₽'],['assets/card2.png','Сапоги трубы фантазийные на каблуке','7 999 ₽']];
-const cardHtml=([src,name,price])=>`<article class="card"><a class="img" href="#"><img data-src="${src}" alt=""></a><div class="info"><div class="tp"><a class="t14" href="#">${name}</a><span class="t14">${price}</span></div><div class="btns"><button aria-label="Добавить в корзину"><span><img data-src="assets/icon-add.svg" alt=""></span></button><button aria-label="В избранное"><span><img data-src="assets/like.svg" alt=""></span></button></div></div></article>`;
-document.querySelectorAll('[data-cards]').forEach(r=>r.innerHTML=cards.map(cardHtml).join(''));
-
-/* assets: load, mark the slot grey if the exported file is not there yet */
-document.querySelectorAll('img[data-src]').forEach(img=>{
-  const slot=img.closest('.logo,.img,.banner div,.ico,.btns span')||img;
-  img.onerror=()=>{slot.classList.add('miss');img.style.visibility='hidden'};
-  img.src=img.dataset.src;
-});
-
-/* overscroll-to-new */
-const fill=document.getElementById('fill'),pct=document.getElementById('pct'),hint=document.getElementById('hint');
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-let acc=0,locked=false,idle,raf;
-const threshold=()=>innerHeight*0.6;
-const isNew=()=>document.body.classList.contains('is-new');
-const atBottom=()=>!isNew()&&Math.ceil(scrollY+innerHeight)>=document.documentElement.scrollHeight-2;
-const render=()=>{const p=Math.min(1,acc/threshold());fill.style.setProperty('--p',p);pct.textContent=p>0?Math.round(p*100)+'%':'';hint.textContent=p>0.02?'Продолжайте':'Скрольте вниз'};
-const decay=()=>{cancelAnimationFrame(raf);const step=()=>{acc*=0.86;if(acc<1)acc=0;render();if(acc>0)raf=requestAnimationFrame(step)};raf=requestAnimationFrame(step)};
-const push=d=>{cancelAnimationFrame(raf);clearTimeout(idle);acc=Math.max(0,acc+d);render();if(acc>=threshold()){go();return}idle=setTimeout(decay,350)};
-const show=n=>{document.body.classList.toggle('is-new',n);scrollTo(0,0);acc=0;render();locked=false};
-const swap=n=>document.startViewTransition&&!reduce?document.startViewTransition(()=>show(n)):show(n);
-function go(){if(locked)return;locked=true;clearTimeout(idle);history.pushState(null,'','#new');swap(true)}
-const home=()=>{history.pushState(null,'','#');swap(false)};
-
-if(!reduce){
-  addEventListener('wheel',e=>{
-    if(locked||!atBottom())return;
-    const d=e.deltaY*(e.deltaMode===1?16:1);
-    if(d>0||acc>0){e.preventDefault();push(d>0?d:d*2)}
-  },{passive:false});
-  let y0=null;
-  addEventListener('touchstart',e=>{y0=e.touches[0].clientY},{passive:true});
-  addEventListener('touchmove',e=>{
-    if(locked||y0==null||!atBottom())return;
-    const y=e.touches[0].clientY,d=(y0-y)*1.4;y0=y;
-    if(d>0||acc>0){e.preventDefault();push(d>0?d:d*2)}
-  },{passive:false});
-  addEventListener('touchend',()=>{y0=null;if(acc>0&&!locked)decay()});
-  addEventListener('keydown',e=>{
-    if(locked||!atBottom()||e.target.closest('input'))return;
-    if(['ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();push(threshold()/4)}
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('[role=tab]'));
+  function select(tab,push){
+    tabs.forEach(function(t){
+      var on=t===tab;
+      t.setAttribute('aria-selected',on);
+      t.tabIndex=on?0:-1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
+    });
+    if(push)history.replaceState(null,'','#'+tab.id.replace('tab-',''));
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){select(t,true)});
+    t.addEventListener('keydown',function(e){
+      var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+      if(!d)return;
+      var n=tabs[(i+d+tabs.length)%tabs.length];n.focus();select(n,true);
+    });
   });
-}
-document.getElementById('goLink').addEventListener('click',e=>{e.preventDefault();go()});
-document.getElementById('logo').addEventListener('click',e=>{e.preventDefault();if(isNew())home();else scrollTo({top:0,behavior:'smooth'})});
-addEventListener('popstate',()=>swap(location.hash==='#new'));
-if(location.hash==='#new')show(true);
-
-const subBtn=document.getElementById('subBtn'),subForm=document.getElementById('subForm');
-subBtn.addEventListener('click',()=>{subForm.hidden=!subForm.hidden;subBtn.setAttribute('aria-expanded',!subForm.hidden);if(!subForm.hidden)subForm.querySelector('input').focus()});
-subForm.addEventListener('submit',e=>{e.preventDefault();subForm.textContent='Спасибо, вы подписаны'});
-render();
-}
+  var h=location.hash.slice(1),t=document.getElementById('tab-'+h);
+  if(t)select(t,false);
+})();
 </script>
 </body>
 </html>
