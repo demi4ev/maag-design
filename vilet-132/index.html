@@ -215,6 +215,17 @@ body.menu-open .menu{transform:none;visibility:visible;transition:transform .35s
   .m-sublist{padding-left:30px}
 }
 
+
+/* ---------- вариант меню: баннер сверху / снизу ---------- */
+.menu[data-banner="bottom"] .m-looks{order:1}
+.menu[data-banner="bottom"] .m-list{order:2}
+.menu[data-banner="bottom"] .m-story{order:3}
+
+/* ---------- системная кнопка прототипа ---------- */
+.sys-btn{position:fixed;right:20px;bottom:20px;z-index:300;padding:6px 12px;background:var(--white);color:var(--black);border:1px solid var(--line);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;font-weight:400;letter-spacing:0;text-transform:none;font-variation-settings:normal}
+.sys-btn:hover{border-color:var(--black)}
+@media (max-width:700px){.sys-btn{right:16px;bottom:16px}.menu[data-banner="bottom"] .m-body{padding-top:16px}}
+
 @media (prefers-reduced-motion:reduce){
   .scrim,.menu,.m-right,.m-sublist a,.m-item .c{transition:none!important}
 }
@@ -301,6 +312,8 @@ body.menu-open .menu{transform:none;visibility:visible;transition:transform .35s
     </div>
   </div>
 </footer>
+
+<button class="sys-btn" id="bannerToggle" type="button" aria-live="polite">Баннер в меню: сверху</button>
 
 <div class="scrim" id="scrim"></div>
 
@@ -422,6 +435,18 @@ body.menu-open .menu{transform:none;visibility:visible;transition:transform .35s
   [].forEach.call(document.querySelectorAll('.fcol--acc .fcol-h'),function(h){
     h.addEventListener('click',function(){h.setAttribute('aria-expanded',h.getAttribute('aria-expanded')==='true'?'false':'true')});
   });
+
+
+  // системная кнопка: баннер в меню сверху / снизу (два варианта из макета)
+  var tgl=document.getElementById('bannerToggle');
+  function setBanner(pos){
+    menu.dataset.banner=pos;
+    tgl.textContent='Баннер в меню: '+(pos==='bottom'?'снизу':'сверху');
+    try{localStorage.setItem('vilet-banner',pos)}catch(e){}
+  }
+  var saved=null;try{saved=localStorage.getItem('vilet-banner')}catch(e){}
+  setBanner(saved==='bottom'?'bottom':'top');
+  tgl.addEventListener('click',function(){setBanner(menu.dataset.banner==='bottom'?'top':'bottom')});
 
   // при смене ширины сбрасываем состояние подменю
   matchMedia('(max-width:700px)').addEventListener('change',function(){setView('main');clearActive()});
